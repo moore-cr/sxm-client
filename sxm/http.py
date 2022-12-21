@@ -151,6 +151,24 @@ def make_http_handler(
             else:
                 response = web.Response(status=403)
 
+        else:
+            channel_match = re.match('^/channels/(.+)/$')
+            if channel_match is not None:
+                try:
+                    channel = await sxm.get_channel(channel_match.group(1))
+                    now_playing = await sxm.get_now_playing(channel)
+                except Exception:
+                    now_playing = []
+
+                if len(now_playing) > 0:
+                    response = web.Response(
+                        status=200,
+                        body=json.dumps(now_playing).encode("utf-8"),
+                        headers={"Content-Type": "application/json; charset=utf-8"},
+                    )
+                else:
+                    response = web.Response(status=403)
+                    
         return response
 
     return sxm_handler
