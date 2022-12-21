@@ -1,7 +1,6 @@
 """HTTP Server module for sxm"""
 import json
 import logging
-import re
 from asyncio import get_event_loop, sleep
 from time import monotonic
 from typing import Any, Callable, Coroutine, Dict, List, Optional
@@ -169,7 +168,7 @@ def make_http_handler(
                     )
                 else:
                     response = web.Response(status=403)
-
+                    
         return response
 
     return sxm_handler
