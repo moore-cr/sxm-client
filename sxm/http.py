@@ -153,7 +153,7 @@ def make_http_handler(
                 response = web.Response(status=403)
 
         else:
-            channel_match = re.match('^/channels/(.+)/$')
+            channel_match = re.match('^/channels/(.+)/$', request.path)
             if channel_match is not None:
                 try:
                     channel = await sxm.get_channel(channel_match.group(1))
